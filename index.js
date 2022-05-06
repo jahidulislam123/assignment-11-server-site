@@ -2,6 +2,7 @@ const express =require('express');
 const cors =require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cli = require('nodemon/lib/cli');
+const { ObjectID } = require('bson');
 
 require('dotenv').config();
 const app=express();
@@ -30,11 +31,20 @@ async function run(){
 
         app.get('/car/:id',async(req,res)=>{
            const id =req.params.id;
-           const query ={_id:id};
+           const query ={_id:ObjectID(id)};
            const result=await carCollection.findOne(query);
            res.send(result);
 
+        });
+
+
+        app.post('/cars',async(req,res)=>{
+           const newCar  =req.body;
+           const result =await carCollection.insertOne(newCar);
+           res.send(result);
         })
+
+
 
     }
     finally{
