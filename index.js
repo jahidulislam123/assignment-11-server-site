@@ -51,9 +51,74 @@ async function run(){
             const result =await carCollection.deleteOne(query);
             res.send(result);
         })
+
+
+        // update 
+       
+          
+       
+
+          
+          app.put('/car/:id' ,async(req,res) =>{
+            const id = req.params.id;
+            const updateQuantity = req.body;
+            const delivery = updateQuantity.quantity -1;
+            const filter = {_id:ObjectId(id)}
+            const option = { upsert : true}
+            const updateDoc ={
+              $set:{
+              
+                quantity : delivery
+              
+              }
+            }
+            const result = await carCollection.updateOne(filter,updateDoc,option);
+            res.send(result);
+          })
         
 
 
+        //   app.put('/car/:id' ,async(req,res) =>{
+        //     const id = req.params.id;
+        //     const updateQuantity = req.body;
+        //     const filter = {_id:ObjectId(id)}
+        //     const option = { upsert : true}
+        //     const updateDoc ={
+        //       $set:{
+              
+        //         quantity:updateQuantity.newQuantity
+              
+        //       }
+        //     }
+        //     const result = await carCollection.updateOne(filter,updateDoc,option);
+        //     res.send(result);
+        //   })
+
+
+        // app.put('/car/:id' ,async(req,res) =>{
+        //     const id = req.params.id;
+        //     const updateQuantity = req.body;
+        //     const filter = {_id:ObjectId(id)}
+        //     const option = { upsert : true}
+        //     const updateDoc ={
+        //       $set:{
+              
+        //         quantity : updateQuantity.newQuantity
+              
+        //       }
+        //     }
+        //     const result = await carCollection.updateOne(filter,updateDoc,option);
+        //     res.send(result);
+        //   })
+          
+        // https://stackoverflow.com/questions/72162245/how-i-can-reload-the-authomaticly
+          
+          
+        
+          
+
+
+         
     }
     finally{
 
